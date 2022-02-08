@@ -1,0 +1,124 @@
+{
+  "startingRoom": "EngineeringQuad",
+  "endingRoom": "IdeaLab",
+  "rooms": [
+    {
+      "name": "Engineering Quad",
+      "description": "You are on the Engineering Quad, outside the Grainger Library",
+      "directions": [
+        {
+          "directionName": "North",
+          "room": "GraingerEntry"
+        }
+      ]
+    },
+    {
+      "name": "GraingerEntry",
+      "description": "You are in the south entry of the Grainger Library. You can see the elevator, the circulation desk, espresso royale, and hallways to the east and west.",
+      "directions": [
+        {
+          "directionName": "North",
+          "room": "EspressoRoyale"
+        },
+        {
+          "directionName": "Southwest",
+          "room": "CirculationDesk"
+        },
+        {
+          "directionName": "West",
+          "room": "GraingerWestHallway"
+        },
+        {
+          "directionName": "East",
+          "room": "GraingerEastHallway"
+        }
+      ]
+    },
+    {
+      "name": "EspressoRoyale",
+      "description": "You are in the Espresso Royale.  There are lots of caffeine addicted U of I students.",
+      "directions": [
+        {
+          "directionName": "South",
+          "room": "GraingerEntry"
+        }
+      ]
+    },
+    {
+      "name": "GraingerWestHallway",
+      "description": "You are in the west hallway. You can see Current Periodicals Section.",
+      "directions": [
+        {
+          "directionName": "East",
+          "room": "SiebelEntry"
+        },
+        {
+          "directionName": "West",
+          "room": "CurrentPeriodicalsSection"
+        }
+      ]
+    },
+    {
+      "name": "CurrentPeriodicalsSection",
+      "description": "You are in Current Periodicals Section. There is a space for storing periodicals.",
+      "directions": [
+        {
+          "directionName": "East",
+          "room": "GraingerWestHallway"
+        }
+      ]
+    },
+    {
+      "name": "GraingerEastHallway",
+      "description": "You are in the east hallway. You can see the Computer Area and the Staff Area.",
+      "directions": [
+        {
+          "directionName": "West",
+          "room": "GraingerEntry"
+        },
+        {
+          "directionName": "South",
+          "room": "ComputerArea"
+        },
+        {
+          "directionName": "East",
+          "room": "StaffArea"
+        },
+        {
+          "directionName": "Down",
+          "room": "IdeaLab"
+        }
+      ]
+    },
+    {
+      "name": "ComputerArea",
+      "description": "You are in the Computer Area. There are happy U of I students working on their task.",
+      "directions": [
+        {
+          "directionName": "North",
+          "room": "GraingerEastHallway"
+        }
+      ]
+    },
+    {
+      "name": "StaffArea",
+      "description": "You are in the Staff Area. There are happy grainger library staffs moving the books.",
+      "directions": [
+        {
+          "directionName": "West",
+          "room": "GraingerEastHallway"
+        }
+      ]
+    },
+    {
+      "name": "IdeaLab",
+      "description": "You are in Idea Lab of Grainger. You see rooms for the group project and multiple 3-D printers.",
+      "directions": [
+        {
+          "directionName": "Up",
+          "room": "GraingerEastHallway"
+        }
+      ]
+    }
+  ]
+}
