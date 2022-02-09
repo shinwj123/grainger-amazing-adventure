@@ -13,12 +13,20 @@ public class AdventureGraingerLibraryDeserialization {
         file = setFile;
     }
 
+    /**
+     * Check if file is NULL
+     */
     public void checkValidAdventureFile() {
         if (file == null) {
             throw new IllegalArgumentException();
         }
     }
 
+    /**
+     * Lay out the map
+     * @return Adventure map
+     * @throws IOException
+     */
     public Layout deserializeAdventureMap() throws IOException {
         Layout layout;
 

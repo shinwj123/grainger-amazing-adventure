@@ -15,7 +15,7 @@ public class GameEngine {
 
     Scanner scan = new Scanner(System.in); // getInput
 
-    List<Items> playerItemList = new ArrayList<>();
+    List<Items> playerItemList = new ArrayList<>(); //pickup item, release item
     Player player = new Player(playerItemList,gameLayout.getStartingRoom());
 
     String presentRoom = gameLayout.getStartingRoom(); // runGame
@@ -25,17 +25,28 @@ public class GameEngine {
 
     }
 
+    /**
+     * gets the input when player enters the input
+     * @return input
+     */
     public String getInput() {
         System.out.println(">>>");
         String input = scan.nextLine();
         return input;
     }
 
+    /**
+     * starts the game
+     */
     public void gameStart() {
         displayMessage();
         runGame(getInput());
     }
 
+    /**
+     * Runs the game until quitting
+     * @param input
+     */
     public void runGame(String input) {
         while (quitGame == false) {
             manualQuitGame(input);
@@ -50,6 +61,11 @@ public class GameEngine {
         }
     }
 
+    /**
+     * manually quits the game if wanted
+     * @param input
+     * @return quitGame
+     */
     public boolean manualQuitGame(String input) {
         input = input.trim();
 
@@ -59,6 +75,10 @@ public class GameEngine {
         return quitGame;
     }
 
+    /**
+     * Shows when reached End Room
+     * @return True
+     */
     public boolean reachEndRoom() {
         String roomName = gameLayout.getRooms()[roomIndexPresent].getName();
 
@@ -69,12 +89,20 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Display the room description
+     * @return
+     */
     public String displayRoomInformation() {
         String roomInformation = gameLayout.getRooms()[roomIndexPresent].getDescription();
 
         return roomInformation;
     }
 
+    /**
+     * Display the option of rooms that player can go
+     * @return
+     */
     public String displayRoomOptionList() {
         String roomOptions =  "From here, you can go: ";
 
@@ -85,6 +113,10 @@ public class GameEngine {
         return roomOptions;
     }
 
+    /**
+     * Display the items in the current room
+     * @return
+     */
     public String displayVisibleItems() {
         String itemList = "Items visible: ";
 
@@ -95,7 +127,10 @@ public class GameEngine {
         return itemList;
     }
 
-
+    /**
+     * Display the item that player has
+     * @return
+     */
     public String displayPlayerItems() {
         String playerItemList = "Your Items: ";
 
@@ -106,11 +141,18 @@ public class GameEngine {
         return playerItemList;
     }
 
+    /**
+     * Displays the whole message of description, room options, items on field, items on hand.
+     */
     public void displayMessage() {
         System.out.println(displayRoomInformation() + "\n" + displayRoomOptionList() + "\n" + displayVisibleItems()
                 + "\n" + displayPlayerItems());
     }
 
+    /**
+     * Validates the move command and Moves the room
+     * @param directionInput
+     */
     public void validMove(String directionInput) {
         String room = "";
         boolean moveValidation = false;
@@ -128,6 +170,10 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Helper function to move the room
+     * @param roomInput
+     */
     public void moveRooms(String roomInput) {
         for (Room room : gameLayout.getRooms()) {
             if (room.getName().equalsIgnoreCase(roomInput)) {
@@ -136,6 +182,10 @@ public class GameEngine {
         }
     }
 
+    /**
+     * picks up the item on the field
+     * @param itemInput
+     */
     public void pickUpItem(String itemInput) {
         boolean itemValid = false;
         for (Items item : gameLayout.getRooms()[roomIndexPresent].getItems()) {
@@ -152,6 +202,10 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Releases the item to the field
+     * @param itemInput
+     */
     public void releaseItem(String itemInput) {
         boolean itemValid = false;
         for (Items item : player.getItems()) {
@@ -168,6 +222,10 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Function that examines the whole input commands
+     * @param input
+     */
     public void inputCommands(String input) {
         String directionInput;
         String itemInput;
