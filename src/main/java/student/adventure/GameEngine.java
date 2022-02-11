@@ -56,7 +56,7 @@ public class GameEngine {
                 System.out.println("GAME OVER");
                 quitGame = true;
             } else {
-                runGame(getInput());
+                runGame(getInput());  // change to input = getInput() -> while loop & recursion is not good to have together (SUPER MESSY)
             }
         }
     }
