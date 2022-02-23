@@ -20,4 +20,19 @@ public class AdventureState {
     // E.g.: If your game needs to display a life total, you could add:
     // private int lifeTotal;
     // ...and whatever constructor/getters/setters you'd need
+
+    private String roomHistory;
+
+    public AdventureState(String setRoomHistory) {
+        roomHistory = setRoomHistory;
+    }
+
+    public void setRoomHistory(String roomHistory) {
+        this.roomHistory = roomHistory;
+    }
+
+    public String getRoomHistory() {
+        return roomHistory;
+    }
+
 }
