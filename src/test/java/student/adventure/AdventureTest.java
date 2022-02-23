@@ -45,26 +45,26 @@ public class AdventureTest {
     @Test
     public void testDisplayStartingRoomDescription() throws IOException {
         assertEquals("You are on the Engineering Quad, outside the Grainger Library",
-                engine.displayRoomInformation());
+                engine.gameInterface.displayRoomInformation());
     }
 
     //Room Option Display testing
     @Test
     public void testDisplayStartingRoomOptions() throws IOException {
-        assertEquals("From here, you can go: North", engine.displayRoomOptionList());
+        assertEquals("From here, you can go: North", engine.gameInterface.displayRoomOptionList());
     }
 
     //Items Option Display testing
     @Test
     public void testDisplayStartingRoomItems() throws IOException {
-        assertEquals("Items visible: Squirrel", engine.displayVisibleItems());
+        assertEquals("Items visible: Squirrel", engine.gameInterface.displayVisibleItems());
     }
 
     //Examine test
     @Test
     public void testExamineCommand() throws IOException {
         engine.inputCommands("Examine");
-        assertEquals("YYou are on the Engineering Quad, outside the Grainger Library\n" +
+        assertEquals("You are on the Engineering Quad, outside the Grainger Library\n" +
                 "From here, you can go: North.\n" +
                 "Items visible: Squirrel." + "\n",outContent.toString());
     }
@@ -72,7 +72,7 @@ public class AdventureTest {
     @Test
     public void testExamineCommandMixedCase() throws IOException {
         engine.inputCommands("exAmiNe");
-        assertEquals("YYou are on the Engineering Quad, outside the Grainger Library\n" +
+        assertEquals("You are on the Engineering Quad, outside the Grainger Library\n" +
                 "From here, you can go: North.\n" +
                 "Items visible: Squirrel." + "\n",outContent.toString());
     }
@@ -80,7 +80,7 @@ public class AdventureTest {
     @Test
     public void testExamineCommandWhitespace() throws IOException {
         engine.inputCommands("examine   ");
-        assertEquals("YYou are on the Engineering Quad, outside the Grainger Library\n" +
+        assertEquals("You are on the Engineering Quad, outside the Grainger Library\n" +
                 "From here, you can go: North.\n" +
                 "Items visible: Squirrel." + "\n",outContent.toString());
     }
@@ -121,6 +121,8 @@ public class AdventureTest {
         assertEquals(false, engine.manualQuitGame("q"));
     }
 
+    @Test
+    public void
 
     @After
     public void restoreStreams() {
