@@ -131,15 +131,27 @@ public class GameOutput {
     }
 
     public List<String> listRoomOptions() {
-        return null;
+        List<String> roomOptions = new ArrayList<>();
+        for (Directions directions : gameLayout.getRooms()[roomIndexPresent].getDirections()) {
+            roomOptions.add(directions.getDirectionName());
+        }
+        return roomOptions;
     }
 
     public List<String> listPlayerItems() {
-        return null;
+        List<String> playerItems = new ArrayList<>();
+        for (Items items : player.getItems()) {
+            playerItems.add(items.getItemName());
+        }
+        return playerItems;
     }
 
 
     public List<String> listRoomItems() {
-        return null;
+        List<String> roomItems = new ArrayList<>();
+        for (Items items : gameLayout.getRooms()[roomIndexPresent].getItems()) {
+            roomItems.add(items.getItemName());
+        }
+        return roomItems;
     }
 }
