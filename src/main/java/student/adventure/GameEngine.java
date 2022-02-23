@@ -79,7 +79,7 @@ public class GameEngine {
                 System.out.println("GAME OVER"); //displaying that the game has ended
                 quitGame = true;
             } else {
-                runGame(gameInterface.getInput());
+                runGame(gameInterface.getInput());  // change to input = getInput() -> while loop & recursion is not good to have together (SUPER MESSY)
             }
         }
     }
