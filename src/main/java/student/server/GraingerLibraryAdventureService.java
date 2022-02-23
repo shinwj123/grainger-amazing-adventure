@@ -51,7 +51,18 @@ public class GraingerLibraryAdventureService implements AdventureService{
      */
     @Override
     public GameStatus getGame(int id) {
+        boolean error = false;
+        GameEngine gameEngine = gameInstances.get(id);
+        Map<String, List<String>> commandOptions = new HashMap<>();
+        AdventureState state = new AdventureState(gameEngine.getGameInterface().displayTraversedRoomsService());
 
+        commandOptions.put("Go", gameEngine.getGameInterface().listRoomOptions());
+        commandOptions.put("Drop", gameEngine.getGameInterface().listPlayerItems());
+        commandOptions.put("Take", gameEngine.getGameInterface().listRoomItems());
+
+        GameStatus gameStatus = new GameStatus(error, id, gameEngine.getGameInterface().displayMessage() ,null, null, state, commandOptions);
+
+        return gameStatus;
     }
 
     /**

@@ -11,14 +11,7 @@ public class GameEngine {
     AdventureGraingerLibraryDeserialization deserialize = new AdventureGraingerLibraryDeserialization(file);
     Layout gameLayout = deserialize.deserializeAdventureMap();
 
-    GameOutput gameInterface = new GameOutput();
-
-    int roomIndexPresent = 0;
-
-    Scanner scan = new Scanner(System.in); // getInput
-
-    List<Items> playerItemList = new ArrayList<>(); //pickup item, release item
-    Player player = new Player(playerItemList,gameLayout.getStartingRoom());
+    GameOutput gameInterface = new GameOutput(); //!! Connecting to the GameOutput.java
 
     String presentRoom = gameLayout.getStartingRoom(); // runGame
     boolean quitGame = (presentRoom.equals(gameLayout.getEndingRoom())); //runGame
@@ -41,19 +34,21 @@ public class GameEngine {
             directionInput = input.split(" ")[1];
             validMove(directionInput);
 
-        }  else if (input.split(" ")[0].equalsIgnoreCase("take") && input.split(" ").length == 2) {
+        } else if (input.split(" ")[0].equalsIgnoreCase("take") && input.split(" ").length == 2) {
             itemInput = input.split(" ")[1];
             pickUpItem(itemInput);
 
-        } else if(input.split(" ")[0].equalsIgnoreCase("drop") && input.split(" ").length == 2) {
+        } else if (input.split(" ")[0].equalsIgnoreCase("drop") && input.split(" ").length == 2) {
             itemInput = input.split(" ")[1];
             releaseItem(itemInput);
 
         } else if (input.equalsIgnoreCase("examine")) {
-            gameInterface.displayMessage();
+            gameInterface.messagePrint(gameInterface.displayMessage());
 
+        } else if (input.equalsIgnoreCase("history")) {
+            gameInterface.messagePrint(gameInterface.displayTraversedRooms());
         } else {
-            System.out.println("I don't understand " + input); // invalid command
+            gameInterface.messagePrint("I don't understand " + input); // invalid command
         }
 
     }
@@ -62,7 +57,7 @@ public class GameEngine {
      * starts the game
      */
     public void gameStart() {
-        gameInterface.displayMessage();
+        gameInterface.messagePrint(gameInterface.displayMessage());
         runGame(gameInterface.getInput());
     }
 
@@ -76,10 +71,10 @@ public class GameEngine {
             inputCommands(input);
 
             if (reachEndRoom() == true) {
-                System.out.println("GAME OVER"); //displaying that the game has ended
+                gameInterface.messagePrint("GAME OVER"); //displaying that the game has ended
                 quitGame = true;
             } else {
-                runGame(gameInterface.getInput());  // change to input = getInput() -> while loop & recursion is not good to have together (SUPER MESSY)
+                input = gameInterface.getInput();  // ** while loop & recursion is not good to have together **
             }
         }
     }
@@ -103,7 +98,7 @@ public class GameEngine {
      * @return True
      */
     public boolean reachEndRoom() {
-        String roomName = gameLayout.getRooms()[roomIndexPresent].getName();
+        String roomName = gameLayout.getRooms()[gameInterface.roomIndexPresent].getName();
 
         if (gameLayout.getEndingRoom().equalsIgnoreCase(roomName)) {
             return true;
@@ -120,7 +115,7 @@ public class GameEngine {
         String room = "";
         boolean moveValidation = false;
 
-        for (Directions direction : gameLayout.getRooms()[roomIndexPresent].getDirections()) {
+        for (Directions direction : gameLayout.getRooms()[gameInterface.roomIndexPresent].getDirections()) {
             if (directionInput.equalsIgnoreCase(direction.getDirectionName())) {
                 moveValidation = true;
                 room = direction.getRoom();
@@ -129,7 +124,7 @@ public class GameEngine {
         }
 
         if (moveValidation == false) {
-            System.out.println("I can't go " + directionInput); //Displaying not possible value
+            gameInterface.messagePrint("I can't go " + directionInput); //Displaying not possible value
         }
     }
 
@@ -140,9 +135,11 @@ public class GameEngine {
     public void moveRooms(String roomInput) {
         for (Room room : gameLayout.getRooms()) {
             if (room.getName().equalsIgnoreCase(roomInput)) {
-                roomIndexPresent = room.getRoomIndex();
+                gameInterface.roomIndexPresent = room.getRoomIndex();
             }
         }
+        addRoomTraversed();
+        gameInterface.messagePrint(gameInterface.displayMessage());
     }
 
     /**
@@ -151,17 +148,17 @@ public class GameEngine {
      */
     public void pickUpItem(String itemInput) {
         boolean itemValid = false;
-        for (Items item : gameLayout.getRooms()[roomIndexPresent].getItems()) {
+        for (Items item : gameLayout.getRooms()[gameInterface.roomIndexPresent].getItems()) {
             if (item.getItemName().equalsIgnoreCase(itemInput)) {
                 itemValid = true;
             }
         }
 
         if (itemValid == false) {
-            System.out.println("There is no item \""  + itemInput + "\" in the room.");
+            gameInterface.messagePrint("There is no item \""  + itemInput + "\" in the room.");
         } else {
-            gameLayout.getRooms()[roomIndexPresent].obtainItem(itemInput);
-            player.obtainItem(itemInput);
+            gameLayout.getRooms()[gameInterface.roomIndexPresent].obtainItem(itemInput);
+            gameInterface.player.obtainItem(itemInput);
         }
     }
 
@@ -171,17 +168,40 @@ public class GameEngine {
      */
     public void releaseItem(String itemInput) {
         boolean itemValid = false;
-        for (Items item : player.getItems()) {
+        for (Items item : gameInterface.player.getItems()) {
             if (item.getItemName().equalsIgnoreCase(itemInput)) {
                 itemValid = true;
             }
         }
 
         if (itemValid == false) {
-            System.out.println("You have no " + itemInput);
+            gameInterface.messagePrint("You have no " + itemInput);
         } else {
-            player.dropItem(itemInput);
-            gameLayout.getRooms()[roomIndexPresent].dropItem(itemInput);
+            gameInterface.player.dropItem(itemInput);
+            gameLayout.getRooms()[gameInterface.roomIndexPresent].dropItem(itemInput);
         }
+    }
+
+    /**
+     * Adds the room traversed to a list
+     */
+    public void addRoomTraversed() {
+        gameInterface.traversedRooms.add(gameInterface.gameLayout.getRooms()[gameInterface.roomIndexPresent].getName());
+    }
+
+    /**
+     * getter function to get game Interface
+     * @return
+     */
+    public GameOutput getGameInterface() {
+        return gameInterface;
+    }
+
+    /**
+     * setter function for the game Interface
+     * @param gameInterface
+     */
+    public void setGameInterface(GameOutput gameInterface) {
+        this.gameInterface = gameInterface;
     }
 }

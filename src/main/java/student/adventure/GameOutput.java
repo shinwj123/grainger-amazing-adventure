@@ -18,7 +18,7 @@ public class GameOutput {
 
     List<Items> playerItemList = new ArrayList<>(); //pickup item, release item
     Player player = new Player(playerItemList,gameLayout.getStartingRoom());
-    List<String> roomsTraversed = new ArrayList<>();
+    List<String> traversedRooms = new ArrayList<>();
 
     public GameOutput() throws IOException {
     }
@@ -68,6 +68,11 @@ public class GameOutput {
             itemList += item.getItemName() + ", ";
         }
 
+        if (itemList.length() > 0) {
+            itemList = itemList.substring(0, itemList.length() - 2);
+            itemList += ".";
+        }
+
         return itemList;
     }
 
@@ -76,42 +81,65 @@ public class GameOutput {
      * @return
      */
     public String displayPlayerItems() {
-        String playerItemList = "Your Items: ";
+        String userItemList = "Your Items: ";
 
         for (Items item : player.getItems()) {
-            playerItemList += item.getItemName() + ", ";
+            userItemList += item.getItemName() + ", ";
         }
 
-        return playerItemList;
+        if (userItemList.length() > 0) {
+            userItemList = userItemList.substring(0, userItemList.length() - 2);
+            userItemList += ".";
+        }
+
+        return userItemList;
     }
 
     /**
      * Displays the whole message of description, room options, items on field, items on hand.
      */
-    public void displayMessage() {
-        System.out.println(displayRoomInformation() + "\n" + displayRoomOptionList() + "\n" + displayVisibleItems()
-                + "\n" + displayPlayerItems());
+    public String displayMessage() {
+        return displayRoomInformation() + "\n" + displayRoomOptionList() + "\n" + displayVisibleItems()
+                + "\n" + displayPlayerItems();
     }
 
-    public Player getPlayer() {
-        return player;
+    public void messagePrint(String message) {
+        System.out.println(message);
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public String displayTraversedRooms() {
+        String output = "";
+        for (String roomName : traversedRooms) {
+            output += roomName + ", ";
+        }
+
+        if (output.length() > 0) {
+            output = output.substring(0, output.length() - 2);
+            output += ".";
+        }
+
+        return "Rooms Traversed: " + output;
     }
 
-    public int getCurrentRoomIndex() {
-        return roomIndexPresent;
+    public String displayTraversedRoomsService() {
+        String output = "";
+        for (String roomName : traversedRooms) {
+            output += roomName + ",";
+        }
+
+        return output;
     }
 
-    public List<String> getRoomsTraversed() {
-        return roomsTraversed;
+    public List<String> listRoomOptions() {
+        return null;
     }
 
-    public void setRoomsTraversed(List<String> roomsTraversed) {
-        this.roomsTraversed = roomsTraversed;
+    public List<String> listPlayerItems() {
+        return null;
     }
 
 
+    public List<String> listRoomItems() {
+        return null;
+    }
 }
