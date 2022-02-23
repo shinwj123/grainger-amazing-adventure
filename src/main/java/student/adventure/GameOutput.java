@@ -68,11 +68,6 @@ public class GameOutput {
             itemList += item.getItemName() + ", ";
         }
 
-        if (itemList.length() > 0) {
-            itemList = itemList.substring(0, itemList.length() - 2);
-            itemList += ".";
-        }
-
         return itemList;
     }
 
@@ -85,11 +80,6 @@ public class GameOutput {
 
         for (Items item : player.getItems()) {
             userItemList += item.getItemName() + ", ";
-        }
-
-        if (userItemList.length() > 0) {
-            userItemList = userItemList.substring(0, userItemList.length() - 2);
-            userItemList += ".";
         }
 
         return userItemList;
@@ -111,11 +101,6 @@ public class GameOutput {
         String output = "";
         for (String roomName : traversedRooms) {
             output += roomName + ", ";
-        }
-
-        if (output.length() > 0) {
-            output = output.substring(0, output.length() - 2);
-            output += ".";
         }
 
         return "Rooms Traversed: " + output;
